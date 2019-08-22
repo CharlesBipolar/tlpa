@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class TelaCadastroCorretor extends StatelessWidget {
   final _NomeCompletoController = TextEditingController();
@@ -9,6 +9,41 @@ class TelaCadastroCorretor extends StatelessWidget {
   final _creciController = TextEditingController();
   final _imobiliariaController = TextEditingController();
   final _celularController = TextEditingController();
+  Future<bool> adicionarCorretor(
+      String nome, String cpf, String creci, String celular,
+      String imobiliaria, String rg, int status ) async {
+    final Map<String, dynamic> dadosLogin = {
+      'nome': nome,
+      'cpf': cpf,
+      'creci': creci,
+      'celular': celular,
+      'imobiliaria': imobiliaria,
+      'rg': rg,
+      'status': status,
+    };
+
+    try {
+      final http.Response response = await http.post(
+        'http://www.pontoaltoapi.tk/api/insere-XXXXXXXXXXXX.php',
+        body: json.encode(dadosLogin),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      );
+
+      String teste = json.encode(dadosLogin);
+
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (error) {
+      return false;
+    }
+  }
+
   OutlineInputBorder oiBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(5.0),
     borderSide: BorderSide(

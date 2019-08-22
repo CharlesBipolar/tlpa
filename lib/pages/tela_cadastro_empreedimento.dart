@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'homepage.dart';
 
 class TelaCadastroEmpreendimento extends StatelessWidget {
@@ -7,6 +9,38 @@ class TelaCadastroEmpreendimento extends StatelessWidget {
   final _nomeController = TextEditingController();
   final _tipologiaController = TextEditingController();
   final _mapaController = TextEditingController();
+  Future<bool> adicionarLogin(
+      int vendido, String nome, String tipologia, int cnpj, String mapa) async {
+    final Map<String, dynamic> dadosLogin = {
+      'vendido': vendido,
+      'nome': nome,
+      'tipologia': tipologia,
+      'cnpj': cnpj,
+      'mapa': mapa,
+    };
+
+    try {
+      final http.Response response = await http.post(
+        'http://www.pontoaltoapi.tk/api/insere-XXXXXXXXXXXX.php',
+        body: json.encode(dadosLogin),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      );
+
+      String teste = json.encode(dadosLogin);
+
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (error) {
+      return false;
+    }
+  }
+
   OutlineInputBorder oiBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(5.0),
     borderSide: BorderSide(

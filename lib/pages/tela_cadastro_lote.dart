@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 import 'homepage.dart';
@@ -6,6 +8,38 @@ class TelaCadastroLote extends StatelessWidget {
   final _tamanhoController = TextEditingController();
   final _quadraController = TextEditingController();
   final _loteController = TextEditingController();
+  Future<bool> adicionarLote(
+      int tamanho, int id_corretor, int id_cliente, String quadra, int lote, int id_empreendimento) async {
+    final Map<String, dynamic> dadosLogin = {
+      'tamanho': tamanho,
+      'id_corretor': id_corretor,
+      'id_cliente': id_cliente,
+      'quadra': quadra,
+      'lote': lote,
+      'id_empreendimento': id_empreendimento,
+    };
+
+    try {
+      final http.Response response = await http.post(
+        'http://www.pontoaltoapi.tk/api/insere-XXXXXXXXXXXX.php',
+        body: json.encode(dadosLogin),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      );
+
+      String teste = json.encode(dadosLogin);
+
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (error) {
+      return false;
+    }
+  }
   OutlineInputBorder oiBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(5.0),
     borderSide: BorderSide(
@@ -26,7 +60,7 @@ class TelaCadastroLote extends StatelessWidget {
               Text(
                 "Dados da Unidade Habitacional ",
                 style: TextStyle(
-                    fontSize: 20.0, color: Color(0xFF8cc63f)),
+                    fontSize: 20.0, color: Color.fromARGB(255, 255, 255, 255)),
               ),
               SizedBox(height: 50.0),
               Padding(
@@ -78,14 +112,8 @@ class TelaCadastroLote extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(vertical: 60.0, horizontal: 30),
                 child: RaisedButton(
-                  padding: EdgeInsets.symmetric(horizontal: 107.5),
-                  color: Color(0xFF8cc63f),
-                  textColor: Color(0xFFffffff),
-                  child: Text("Registrar",
-                    style: TextStyle(fontSize: 20.5),
-                  ),
+                  child: Text("Registrar"),
                   onPressed: () {
-
 
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){
                       return HomePage();

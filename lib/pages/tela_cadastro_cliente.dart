@@ -1,9 +1,62 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:tlpa/pages/homepage.dart';
+import 'homepage.dart';
+
 
 
 
 class TelaCadastroCliente extends StatelessWidget {
+  final _nomecontroller = TextEditingController();
+  final _cpfcontroller = TextEditingController();
+  final _rgcontroller = TextEditingController();
+  final _telefonecontroller = TextEditingController();
+  final _celularcontroller = TextEditingController();
+  final _emailcontroller = TextEditingController();
+  final _estadocivilcontroller = TextEditingController();
+
+  Future<bool> adicionarCliente(
+      String nome, String cpf, String rg, String telefone, String celular, String email, String regime_casamento, String parceria_nome,
+      String parceria_cpf, String parceria_rg, String parceria_telefone, String parceria_email, String parceria_celular) async {
+    final Map<String, dynamic> dadosLogin = {
+      'nome': nome,
+      'cpf': cpf,
+      'rg': rg,
+      'telefone': telefone,
+      'celular': celular,
+      'email': email,
+      'regime-casamento': regime_casamento,
+      'parceria_nome': parceria_nome,
+      'parceria_cpf':parceria_cpf,
+      'parceria_rg':parceria_rg,
+      'parceria_telefone':parceria_telefone,
+      'parceria_email':parceria_email,
+      'parceria_celular':parceria_celular,
+    };
+
+    try {
+      final http.Response response = await http.post(
+        'http://www.pontoaltoapi.tk/api/insere-XXXXXXXXXXXX.php',
+        body: json.encode(dadosLogin),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      );
+
+      String teste = json.encode(dadosLogin);
+
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (error) {
+      return false;
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +81,7 @@ class TelaCadastroCliente extends StatelessWidget {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
-                child: TextFormField(
+                child: TextFormField(controller: _nomecontroller,
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                       border: UnderlineInputBorder(),
@@ -49,6 +102,7 @@ class TelaCadastroCliente extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
                 child: TextFormField(
+                  controller: _cpfcontroller,
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                       border: UnderlineInputBorder(),
@@ -68,7 +122,7 @@ class TelaCadastroCliente extends StatelessWidget {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
-                child: TextFormField(
+                child: TextFormField(controller: _rgcontroller,
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                     border: UnderlineInputBorder(),
@@ -91,7 +145,7 @@ class TelaCadastroCliente extends StatelessWidget {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
-                child: TextFormField(
+                child: TextFormField(controller: _telefonecontroller,
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                     border: UnderlineInputBorder(),
@@ -114,7 +168,7 @@ class TelaCadastroCliente extends StatelessWidget {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
-                child: TextFormField(
+                child: TextFormField(controller: _celularcontroller,
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                     border: UnderlineInputBorder(),
@@ -137,7 +191,7 @@ class TelaCadastroCliente extends StatelessWidget {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
-                child: TextFormField(
+                child: TextFormField(controller: _emailcontroller,
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                     border: UnderlineInputBorder(),
@@ -160,7 +214,7 @@ class TelaCadastroCliente extends StatelessWidget {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
-                child: TextFormField(
+                child: TextFormField(controller: _estadocivilcontroller,
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                     border: UnderlineInputBorder(),
