@@ -75,7 +75,7 @@ class _TelaLoginState extends State<TelaLogin> {
                         },),);
                   },
                   child: Text(
-                    "logar-se",
+                    "Logar-se",
                     style: TextStyle(fontSize: 20.5),
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 126.5),

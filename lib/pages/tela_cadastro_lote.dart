@@ -60,7 +60,7 @@ class TelaCadastroLote extends StatelessWidget {
               Text(
                 "Dados da Unidade Habitacional ",
                 style: TextStyle(
-                    fontSize: 20.0, color: Color.fromARGB(255, 255, 255, 255)),
+                    fontSize: 20.0, color: Color(0xFF8cc63f)),
               ),
               SizedBox(height: 50.0),
               Padding(
@@ -112,7 +112,13 @@ class TelaCadastroLote extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(vertical: 60.0, horizontal: 30),
                 child: RaisedButton(
-                  child: Text("Registrar"),
+                  padding: EdgeInsets.symmetric(horizontal: 126.5),
+                  color: Color(0xFF8cc63f),
+                  child: Text("Registrar",
+                  style: TextStyle(color: Color(0xFFffffff),
+                  fontSize: 20.5,
+                  ),
+                  ),
                   onPressed: () {
 
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){
